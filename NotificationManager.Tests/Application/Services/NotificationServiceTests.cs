@@ -15,7 +15,7 @@ namespace NotificationManager.Tests.Application.Services
         private readonly Mock<ILogger<NotificationService>> _logger = new();
         private readonly Mock<IRateLimiter> _rateLimiter = new();
         private readonly Mock<IAiMessageGenerator> _ai = new();
-        private readonly Mock<IExternalMessangerService> _discord = new();
+        private readonly Mock<IExternalMessengerService> _discord = new();
 
         private readonly NotificationService _service;
 

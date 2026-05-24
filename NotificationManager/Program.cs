@@ -15,7 +15,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddSingleton<IRateLimiter, RateLimiter>();
-builder.Services.AddHttpClient<IExternalMessangerService, DiscordService>();
+builder.Services.AddHttpClient<IExternalMessengerService, DiscordService>();
 builder.Services.AddHttpClient<IAiMessageGenerator, AiMessageGenerator>();
 
 var app = builder.Build();

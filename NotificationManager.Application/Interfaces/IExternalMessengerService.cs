@@ -1,6 +1,6 @@
 ﻿namespace NotificationManager.Application.Interfaces
 {
-    public interface IExternalMessangerService
+    public interface IExternalMessengerService
     {
         Task SendAsync(string message);
     }

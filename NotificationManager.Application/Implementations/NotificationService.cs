@@ -10,7 +10,7 @@ namespace NotificationManager.Application.Implementations
         ILogger<NotificationService> _logger,
         IRateLimiter _rateLimiter,
         IAiMessageGenerator _ai,
-        IExternalMessangerService _discord) : INotificationService
+        IExternalMessengerService _discord) : INotificationService
     {
         public async Task SendNotificationAsync(NotificationDto dto)
         {

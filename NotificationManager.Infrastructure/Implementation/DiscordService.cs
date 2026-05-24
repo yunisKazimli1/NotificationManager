@@ -8,7 +8,7 @@ namespace NotificationManager.Infrastructure.Implementation
     public class DiscordService(
         HttpClient _httpClient,
         IConfiguration _configuration,
-        ILogger<DiscordService> _logger) : IExternalMessangerService
+        ILogger<DiscordService> _logger) : IExternalMessengerService
     {
 
         public async Task SendAsync(string message)

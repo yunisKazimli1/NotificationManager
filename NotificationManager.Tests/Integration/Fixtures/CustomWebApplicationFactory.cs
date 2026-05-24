@@ -9,7 +9,7 @@ namespace NotificationManager.Tests.Integration.Fixtures
 {
     public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
-        public Mock<IExternalMessangerService> DiscordServiceMock { get; } = new Mock<IExternalMessangerService>();
+        public Mock<IExternalMessengerService> DiscordServiceMock { get; } = new Mock<IExternalMessengerService>();
 
         public Mock<INotificationService> NotificationServiceMock { get; } = new Mock<INotificationService>();
 
@@ -18,11 +18,9 @@ namespace NotificationManager.Tests.Integration.Fixtures
             builder.ConfigureServices(services =>
             {
                 // Remove real service registration
-                //services.RemoveAll(typeof(INotificationService));
-                services.RemoveAll(typeof(IExternalMessangerService));
+                services.RemoveAll(typeof(IExternalMessengerService));
 
                 // Register mock
-                //services.AddScoped(_ => NotificationServiceMock.Object);
                 services.AddScoped(_ => DiscordServiceMock.Object);
             });
         }
