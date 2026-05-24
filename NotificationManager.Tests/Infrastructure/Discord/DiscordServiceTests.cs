@@ -75,7 +75,7 @@ namespace NotificationManager.Tests.Infrastructure.Discord
 
             await sut.SendAsync("hello discord");
 
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
         }
     }
 }

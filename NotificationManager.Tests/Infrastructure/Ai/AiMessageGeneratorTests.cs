@@ -73,7 +73,7 @@ namespace NotificationManager.Tests.Infrastructure.Ai
         }
 
         [Fact]
-        public async Task Should_throw_TooManyRequestsException_when_429()
+        public async Task Should_throw_general_exception_when_429()
         {
             var response = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
 
@@ -89,7 +89,7 @@ namespace NotificationManager.Tests.Infrastructure.Ai
             Func<Task> act = async () => await sut.GenerateMessageAsync(dto);
 
             await act.Should()
-                .ThrowAsync<TooManyRequestsException>();
+                .ThrowAsync<Exception>();
         }
 
         [Fact]

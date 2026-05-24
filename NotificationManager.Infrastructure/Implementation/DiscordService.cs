@@ -20,8 +20,7 @@ namespace NotificationManager.Infrastructure.Implementation
 
             if (string.IsNullOrWhiteSpace(webhookUrl))
             {
-                _logger.LogError("Discord webhook URL is missing");
-                return;
+                throw new Exception("Discord webhook URL is missing");
             }
 
             _logger.LogInformation("Sending message to Discord");
@@ -36,8 +35,8 @@ namespace NotificationManager.Infrastructure.Implementation
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Failed to send Discord message. Status: {Status}, Error: {Error}",
-                    response.StatusCode, error);
+
+                throw new Exception($"Failed to send Discord message. Status: {response.StatusCode}, Error: {error}");
             }
             else
             {

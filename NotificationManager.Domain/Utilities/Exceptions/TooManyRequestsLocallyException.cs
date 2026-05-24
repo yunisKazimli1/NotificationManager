@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NotificationManager.Domain.Utilities.Exceptions
 {
-    public class TooManyRequestsLocallyException : TooManyRequestsException
+    public class TooManyRequestsLocallyException : Exception
     {
     }
 }

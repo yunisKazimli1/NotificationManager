@@ -8,8 +8,9 @@ using NotificationManager.Application.Interfaces;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    public Mock<INotificationService> NotificationServiceMock { get; }
-        = new Mock<INotificationService>();
+    public Mock<IDiscordService> DiscordServiceMock { get; } = new Mock<IDiscordService>();
+
+    public Mock<INotificationService> NotificationServiceMock { get; } = new Mock<INotificationService>();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -17,9 +18,11 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         {
             // Remove real service registration
             services.RemoveAll(typeof(INotificationService));
+            services.RemoveAll(typeof(IDiscordService));
 
             // Register mock
             services.AddScoped(_ => NotificationServiceMock.Object);
+            services.AddScoped(_ => DiscordServiceMock.Object);
         });
     }
 }

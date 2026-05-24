@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<IRateLimiter, RateLimiter>();
+builder.Services.AddSingleton<IRateLimiter, RateLimiter>();
 builder.Services.AddHttpClient<IDiscordService, DiscordService>();
 builder.Services.AddHttpClient<IAiMessageGenerator, AiMessageGenerator>();
 
@@ -54,7 +54,7 @@ app.UseExceptionHandler(errorApp =>
 
         context.Response.StatusCode = exception switch
         {
-            TooManyRequestsException => StatusCodes.Status429TooManyRequests,
+            TooManyRequestsLocallyException => StatusCodes.Status429TooManyRequests,
             _ => StatusCodes.Status500InternalServerError
         };
 

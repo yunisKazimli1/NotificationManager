@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using NotificationManager.Application.Dtos;
+using NotificationManager.Domain.Enums;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
@@ -44,5 +45,81 @@ public class NotificationApiTests : IClassFixture<CustomWebApplicationFactory>
             )),
             Times.Once
         );
+    }
+
+    [Fact]
+    public async Task Send_ShouldReturn429_After10Requests()
+    {
+        // Arrange
+        var dto = new NotificationDto
+        {
+            Title = "Rate limit test",
+            Message = "Testing rate limiter",
+            NotificationLevel = NotificationLevel.Warning
+        };
+
+        HttpResponseMessage response = null!;
+
+        // Act - send 11 requests quickly
+        for (int i = 1; i <= 11; i++)
+        {
+            response = await _client.PostAsJsonAsync("/api/Notification", dto);
+        }
+
+        // Assert
+
+        response.StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
+    }
+
+    [Fact]
+    public async Task Send_ShouldReturn500_WhenUnexpectedExceptionOccurs()
+    {
+        // Arrange
+        var dto = new NotificationDto
+        {
+            Title = "Exception test",
+            Message = "Force failure",
+            NotificationLevel = NotificationLevel.Warning
+        };
+
+        _factory.DiscordServiceMock
+            .Setup(x => x.SendAsync(It.IsAny<string>()))
+            .ThrowsAsync(new Exception("Discord failure"));
+
+        // Act
+        var response = await _client.PostAsJsonAsync("/api/Notification", dto);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+
+        var content = await response.Content.ReadAsStringAsync();
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+    }
+
+    [Fact]
+    public async Task Send_ShouldReturnBadRequest_WhenRequestBodyIsInvalid()
+    {
+        // Arrange
+        var invalidDto = new NotificationDto
+        {
+            Title = null,   // invalid
+            Message = null  // invalid
+        };
+
+        // Act
+        var response = await _client.PostAsJsonAsync("/api/Notification", invalidDto);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task Health_ShouldReturn200Ok()
+    {
+        // Act
+        var response = await _client.GetAsync("/health");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

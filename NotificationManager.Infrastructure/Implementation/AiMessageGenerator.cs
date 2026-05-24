@@ -57,7 +57,7 @@ namespace NotificationManager.Infrastructure.Implementation
                 response.ReasonPhrase);
 
             if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
-                throw new TooManyRequestsException();
+                throw new Exception("OpenAi router api usage limit has been exceeded");
 
             response.EnsureSuccessStatusCode();
 
