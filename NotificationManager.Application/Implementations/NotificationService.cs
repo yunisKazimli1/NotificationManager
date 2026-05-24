@@ -31,7 +31,7 @@ namespace NotificationManager.Application.Implementations
             {
                 _logger.LogWarning("Rate limit reached (10/min). Notification dropped.");
 
-                throw new TooManyRequestsException();//expected TooManyRequestsException, because of business rule
+                throw new TooManyRequestsLocallyException();//expected TooManyRequestsException, because of business rule
             }
 
             var message = await _ai.GenerateMessageAsync(dto);
