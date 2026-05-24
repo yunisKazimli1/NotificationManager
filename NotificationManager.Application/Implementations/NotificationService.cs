@@ -7,16 +7,11 @@ using NotificationManager.Domain.Utilities.Exceptions;
 namespace NotificationManager.Application.Implementations
 {
     public class NotificationService(
-        ILogger<NotificationService> logger,
-        IRateLimiter rateLimiter,
-        IAiMessageGenerator ai,
-        IDiscordService discord) : INotificationService
+        ILogger<NotificationService> _logger,
+        IRateLimiter _rateLimiter,
+        IAiMessageGenerator _ai,
+        IExternalMessangerService _discord) : INotificationService
     {
-        private readonly ILogger<NotificationService> _logger = logger;
-        private readonly IRateLimiter _rateLimiter = rateLimiter;
-        private readonly IAiMessageGenerator _ai = ai;
-        private readonly IDiscordService _discord = discord;
-
         public async Task SendNotificationAsync(NotificationDto dto)
         {
             _logger.LogInformation("Processing notification with level {Level}", dto.NotificationLevel);

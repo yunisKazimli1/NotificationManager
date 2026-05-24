@@ -6,13 +6,10 @@ using System.Net.Http.Json;
 namespace NotificationManager.Infrastructure.Implementation
 {
     public class DiscordService(
-        HttpClient httpClient,
-        IConfiguration configuration,
-        ILogger<DiscordService> logger) : IDiscordService
+        HttpClient _httpClient,
+        IConfiguration _configuration,
+        ILogger<DiscordService> _logger) : IExternalMessangerService
     {
-        private readonly HttpClient _httpClient = httpClient;
-        private readonly IConfiguration _configuration = configuration;
-        private readonly ILogger<DiscordService> _logger = logger;
 
         public async Task SendAsync(string message)
         {

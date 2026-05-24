@@ -9,6 +9,7 @@ namespace NotificationManager.Application.Implementations
         public bool Allow()
         {
             var now = DateTime.UtcNow;
+            Console.WriteLine($"RateLimiter instance: {GetHashCode()} Count: {_timestamps.Count}");
 
             while (_timestamps.Count > 0 &&
                    (now - _timestamps.Peek()).TotalMinutes >= 1)

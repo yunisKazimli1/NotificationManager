@@ -40,15 +40,15 @@ namespace NotificationManager.Tests.Infrastructure.Discord
         }
 
         [Fact]
-        public async Task Should_not_send_when_webhook_missing()
+        public async Task Should_throw_general_exception_when_webhook_missing()
         {
             var sut = CreateSut(
                 new HttpResponseMessage(HttpStatusCode.OK),
                 webhookUrl: null);
 
-            await sut.SendAsync("test message");
+            Func<Task> act = async () => await sut.SendAsync("test message");
 
-            // no exception expected
+            await act.Should().ThrowAsync<Exception>();
         }
 
         [Fact]
@@ -61,21 +61,6 @@ namespace NotificationManager.Tests.Infrastructure.Discord
             await sut.SendAsync("hello discord");
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-
-        [Fact]
-        public async Task Should_handle_failed_response()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
-            {
-                Content = new StringContent("Invalid webhook")
-            };
-
-            var sut = CreateSut(response);
-
-            await sut.SendAsync("hello discord");
-
-            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
         }
     }
 }

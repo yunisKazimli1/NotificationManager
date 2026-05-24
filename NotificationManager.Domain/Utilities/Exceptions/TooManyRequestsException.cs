@@ -1,6 +1,6 @@
 ﻿namespace NotificationManager.Domain.Utilities.Exceptions
 {
-    public class TooManyRequestsLocallyException : Exception
+    public class TooManyRequestsException : Exception
     {
     }
 }

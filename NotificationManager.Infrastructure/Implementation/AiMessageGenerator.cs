@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using NotificationManager.Application.Dtos;
 using NotificationManager.Application.Interfaces;
-using NotificationManager.Domain.Utilities.Exceptions;
 using NotificationManager.Infrastructure.Dtos;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -10,13 +9,10 @@ using System.Net.Http.Json;
 namespace NotificationManager.Infrastructure.Implementation
 {
     public class AiMessageGenerator(
-        HttpClient httpClient,
-        IConfiguration configuration,
-        ILogger<AiMessageGenerator> logger) : IAiMessageGenerator
+        HttpClient _httpClient,
+        IConfiguration _configuration,
+        ILogger<AiMessageGenerator> _logger) : IAiMessageGenerator
     {
-        private readonly HttpClient _httpClient = httpClient;
-        private readonly IConfiguration _configuration = configuration;
-        private readonly ILogger<AiMessageGenerator> _logger = logger;
 
         public async Task<string> GenerateMessageAsync(NotificationDto dto)
         {

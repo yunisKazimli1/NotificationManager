@@ -5,7 +5,6 @@ using Moq;
 using Moq.Protected;
 using NotificationManager.Application.Dtos;
 using NotificationManager.Domain.Enums;
-using NotificationManager.Domain.Utilities.Exceptions;
 using NotificationManager.Infrastructure.Implementation;
 using System.Net;
 using System.Text;
@@ -88,8 +87,7 @@ namespace NotificationManager.Tests.Infrastructure.Ai
 
             Func<Task> act = async () => await sut.GenerateMessageAsync(dto);
 
-            await act.Should()
-                .ThrowAsync<Exception>();
+            await act.Should().ThrowAsync<Exception>();
         }
 
         [Fact]
@@ -101,7 +99,7 @@ namespace NotificationManager.Tests.Infrastructure.Ai
 
             var configMock = new Mock<IConfiguration>();
             configMock.Setup(x => x["OpenAI:ApiKey"])
-                      .Returns((string)null);
+                      .Returns("");
 
             var loggerMock = new Mock<ILogger<AiMessageGenerator>>();
 

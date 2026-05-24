@@ -1,6 +1,6 @@
 ﻿namespace NotificationManager.Application.Interfaces
 {
-    public interface IDiscordService
+    public interface IExternalMessangerService
     {
         Task SendAsync(string message);
     }
